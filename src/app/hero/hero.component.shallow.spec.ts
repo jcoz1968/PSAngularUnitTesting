@@ -1,8 +1,9 @@
 import { AppRoutingModule } from './../app-routing.module';
 import { HeroComponent } from './hero.component';
 import { TestBed, ComponentFixture } from "@angular/core/testing";
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component, Input, Output, EventEmitter } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { Hero } from '../hero';
 
 describe('HeroComponent (shallow tests)', () => {
   let fixture: ComponentFixture<HeroComponent>;
