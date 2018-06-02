@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NO_ERRORS_SCHEMA, Component, Input } from '@angular/core';
 import { HeroService } from '../hero.service';
 import { Hero } from '../hero';
+import { By } from '@angular/platform-browser';
 
 describe('HeroesComponent (shallow tests)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
@@ -38,13 +39,20 @@ describe('HeroesComponent (shallow tests)', () => {
 
     fixture = TestBed.createComponent(HeroesComponent);
 
-    it('should do nothing', () => {
-      mockHeroService.getHeroes.and.returnValue(of(HEROES))
-      fixture.detectChanges();
+  });
 
-      expect(fixture.componentInstance.heroes.length).toBe(3);
-    });
+  it('should do nothing', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES))
+    fixture.detectChanges();
 
+    expect(fixture.componentInstance.heroes.length).toBe(3);
+  });
+
+  it('should create one li for each hero', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+
+    fixture.detectChanges();
+    expect(fixture.debugElement.queryAll(By.css('li')).length).toBe(3);
   });
 
 });
