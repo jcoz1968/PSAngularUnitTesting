@@ -46,4 +46,17 @@ describe('HeroesComponent (deep tests)', () => {
     }
   });
 
+  it('should call heroService.deleteHero when delete button is clicked', () => {
+    spyOn(fixture.componentInstance, 'delete');
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    //run ngOnInit
+    fixture.detectChanges();
+
+    const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent));
+    heroComponents[0].query(By.css('button'))
+    .triggerEventHandler('click', { stopPropogation: () => {}});
+
+    expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
+  });
+
 });
