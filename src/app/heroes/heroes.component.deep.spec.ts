@@ -1,11 +1,25 @@
-import { HeroComponent } from './../hero/hero.component';
-import { of } from 'rxjs/observable/of';
 import { HeroesComponent } from './heroes.component';
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { NO_ERRORS_SCHEMA, Component, Input } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component, Input, Directive } from '@angular/core';
 import { HeroService } from '../hero.service';
+import { HeroComponent } from './../hero/hero.component';
+import { of } from 'rxjs/observable/of';
 import { Hero } from '../hero';
 import { By } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
+
+@Directive({
+  selector: '[routerLink]',
+  host: { '(click)': 'onClick()' }
+})
+export class RouterLinkDirectiveStub {
+  @Input('routerLink') linkPrams: any;
+  navigatedTo: any = null;
+
+  onClick() {
+    this.navigatedTo = this.linkPrams;
+  }
+}
 
 describe('HeroesComponent (deep tests)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
@@ -23,9 +37,10 @@ describe('HeroesComponent (deep tests)', () => {
     TestBed.configureTestingModule({
       declarations: [
         HeroesComponent,
-        HeroComponent
+        HeroComponent,
+        RouterLinkDirectiveStub
       ],
-      schemas: [NO_ERRORS_SCHEMA],
+      // schemas: [NO_ERRORS_SCHEMA],
       providers: [ { provide: HeroService, useValue: mockHeroService }]
     });
 
